@@ -100,7 +100,7 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
     # Add Course Learning Outcomes (CLOs)
     doc.add_heading('Course Learning Outcomes (CLOs)', level=2)
     for i, clo in enumerate(json_data['clos'], 1):
-        doc.add_paragraph(f"CLO {i}: {clo}", style='ListBullet')
+        doc.add_paragraph(f"{clo}", style='ListBullet')
 
     # Add Topics / Modules and Intended Learning Outcomes (ILOs)
     doc.add_heading('Topics / Modules and Intended Learning Outcomes', level=2)
