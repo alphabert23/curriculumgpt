@@ -1,0 +1,71 @@
+[
+    {
+        "Course Details": {
+            "Course Title": "Physics (I)",
+            "Course Description": "\"\"\"Physics (I) is a foundational course designed for first-year mechanical engineering students. This course provides an introduction to the fundamental principles of physics and their applications in mechanical engineering. The course covers topics such as mechanics, thermodynamics, waves, and optics.\n\nStudents will learn about the laws of motion, forces, energy, and momentum, and how they apply to mechanical systems. They will also study the behavior of gases, liquids, and solids, and the principles of heat transfer. The course will also cover the properties of waves, including sound and light, and their applications in engineering.\n\nThroughout the course, students will engage in hands-on activities and experiments to reinforce their understanding of the concepts covered. They will also develop problem-solving skills through the application of physics principles to real-world engineering problems.\n\nUpon completion of this course, students will have a solid foundation in physics and be able to apply their knowledge to the design and analysis of mechanical systems. They will also be prepared for further study in advanced physics courses and their applications in mechanical engineering.\"\"\"",
+            "Instructor Name": "asdad",
+            "Credit Units": 3,
+            "Target Students": "1st Year Mechanical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Execution Time": 66.79190182685852,
+        "Save Location": "course_outline_outputs\\.docx"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Digital Image Processing and Application",
+            "Course Description": "\"\"\"Digital Image Processing and Application is a course designed for 4th Year Electrical Engineering students who are interested in learning about the fundamentals of digital image processing and its applications. The course will cover the basic concepts of image processing, including image acquisition, image enhancement, image restoration, image segmentation, and image compression. \n\nThe course will also focus on the practical applications of digital image processing in various fields, such as medical imaging, remote sensing, and computer vision. Students will learn how to use various software tools and programming languages, such as MATLAB, Python, and OpenCV, to implement digital image processing algorithms and analyze the results. \n\nThroughout the course, students will work on several projects that involve real-world applications of digital image processing. These projects will help students develop their problem-solving skills and gain hands-on experience in applying digital image processing techniques to solve real-world problems. \n\nBy the end of the course, students will have a solid understanding of the principles of digital image processing and its applications. They will be able to apply their knowledge to solve complex problems in various fields and will be well-prepared for careers in industries such as medical imaging, robotics, and computer vision.\"\"\"",
+            "Instructor Name": "Test",
+            "Credit Units": 3,
+            "Target Students": "4th Year Electrical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Execution Time": 92.85243844985962,
+        "Save Location": "course_outline_outputs\\.docx"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Digital Image Processing and Application",
+            "Course Description": "\"\"\"Digital Image Processing and Application is a course designed for 4th Year Electrical Engineering students who are interested in learning about the fundamentals of digital image processing and its applications. The course will cover the basic concepts of image processing, including image acquisition, image enhancement, image restoration, image segmentation, and image compression. \n\nThe course will also focus on the practical applications of digital image processing in various fields, such as medical imaging, remote sensing, and computer vision. Students will learn how to use various software tools and programming languages, such as MATLAB, Python, and OpenCV, to implement digital image processing algorithms and analyze the results. \n\nThroughout the course, students will work on several projects that involve real-world applications of digital image processing. These projects will help students develop their problem-solving skills and gain hands-on experience in applying digital image processing techniques to solve real-world problems. \n\nBy the end of the course, students will have a solid understanding of the principles of digital image processing and its applications. They will be able to apply their knowledge to solve complex problems in various fields and will be well-prepared for careers in industries such as medical imaging, robotics, and computer vision.\"\"\"",
+            "Instructor Name": "Test 2",
+            "Credit Units": 3,
+            "Target Students": "4th Year Electrical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Execution Time": 34.990928173065186,
+        "Save Location": "course_outline_outputs\\Digital_Image_Processing_and_Application_Test_2_Course_Outline.docx"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Digital Image Processing and Application",
+            "Course Description": "\"\"\"Digital Image Processing and Application is a course designed for 4th Year Electrical Engineering students who are interested in learning about the fundamentals of digital image processing and its applications. The course will cover the basic concepts of image processing, including image acquisition, image enhancement, image restoration, image segmentation, and image compression. \n\nThe course will also focus on the practical applications of digital image processing in various fields, such as medical imaging, remote sensing, and computer vision. Students will learn how to use various software tools and programming languages, such as MATLAB, Python, and OpenCV, to implement digital image processing algorithms and analyze the results. \n\nThroughout the course, students will work on several projects that involve real-world applications of digital image processing. These projects will help students develop their problem-solving skills and gain hands-on experience in applying digital image processing techniques to solve real-world problems. \n\nBy the end of the course, students will have a solid understanding of the principles of digital image processing and its applications. They will be able to apply their knowledge to solve complex problems in various fields and will be well-prepared for careers in industries such as medical imaging, robotics, and computer vision.\"\"\"",
+            "Instructor Name": "Test 2",
+            "Credit Units": 3,
+            "Target Students": "4th Year Electrical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-3.5-turbo",
+        "Execution Time": 46.97611355781555,
+        "Save Location": "course_outline_outputs\\Digital_Image_Processing_and_Application_Test_2_Course_Outline.docx",
+        "Date": "2024-04-22 00:41:17"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Digital Image Processing and Application",
+            "Course Description": "\"\"\"Digital Image Processing and Application is a course designed for 4th Year Electrical Engineering students who are interested in learning about the fundamentals of digital image processing and its applications. The course will cover the basic concepts of image processing, including image acquisition, image enhancement, image restoration, image segmentation, and image compression. \n\nThe course will also focus on the practical applications of digital image processing in various fields, such as medical imaging, remote sensing, and computer vision. Students will learn how to use various software tools and programming languages, such as MATLAB, Python, and OpenCV, to implement digital image processing algorithms and analyze the results. \n\nThroughout the course, students will work on several projects that involve real-world applications of digital image processing. These projects will help students develop their problem-solving skills and gain hands-on experience in applying digital image processing techniques to solve real-world problems. \n\nBy the end of the course, students will have a solid understanding of the principles of digital image processing and its applications. They will be able to apply their knowledge to solve complex problems in various fields and will be well-prepared for careers in industries such as medical imaging, robotics, and computer vision.\"\"\"",
+            "Instructor Name": "Test 2",
+            "Credit Units": 3,
+            "Target Students": "4th Year Electrical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4-turbo-preview",
+        "Execution Time": 73.66075873374939,
+        "Save Location": "course_outline_outputs\\Digital_Image_Processing_and_Application_Test_2_Course_Outline.docx",
+        "Date": "2024-04-22 00:55:59"
+    }
+]

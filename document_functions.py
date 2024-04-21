@@ -170,8 +170,9 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
             ref_paragraph = doc.add_paragraph(style='BodyText')
             ref_paragraph.add_run(reference['reference']).italic = True
             if 'link' in reference:
-                ref_paragraph.add_run("\nLink: ")
-                ref_paragraph.add_run(reference['link'])
+                if reference['link'] != '':
+                    ref_paragraph.add_run("\nLink: ")
+                    ref_paragraph.add_run(reference['link'])
 
     # Allow for titles containing .docx to still be saved as a word document ending in .docx instead of .docx.docx
     title = title.replace(".docx", "")
