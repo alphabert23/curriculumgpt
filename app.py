@@ -6,14 +6,6 @@ import json
 import time
 import datetime
 
-
-def get_binary_file_downloader_html(bin_file, file_label='File'):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    bin_str = base64.b64encode(data).decode()
-    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
-    return href
-
 if "doc_path" not in st.session_state:
     st.session_state.doc_path = None
 if 'execution_time' not in st.session_state:
@@ -21,32 +13,43 @@ if 'execution_time' not in st.session_state:
 if 'output_file_path' not in st.session_state:    
     st.session_state.output_file_path= None
     st.session_state.output_file_name = None
-
 if 'learning_outcomes' not in st.session_state:
     st.session_state.learning_outcomes = None
+if 'default_description' not in st.session_state:
+    st.session_state.default_description = None
 
 # Title
-st.title("GPT Course Outline Generator")
+st.title("CurriculumGPT")
 
 # Input course details
-course_title = st.text_input("Course Title")
-course_description = st.text_area("Course Description", height=100)
+course_title = st.text_input("Course Title", None)
+target_students = st.text_input("Target Students",placeholder="e.g. 3rd year BS Computer Science students",value = None)
+course_description = st.text_area("Course Description", height=100,value = st.session_state.default_description)
+
+if st.button("Auto-generate Description") :
+    if course_title and target_students is not None:
+        st.session_state.default_description = generate_description(course_title,target_students)
+        st.experimental_rerun()
+    else:
+        st.error("*Please input both Course Title and Target Students*")
+
 instructor_name = st.text_input("Instructor Name",placeholder="e.g. Dr. Juan Dela Cruz")
-target_students = st.text_input("Target Students",placeholder="e.g. 3rd year BS Computer Science students")
 
 col1, col2 = st.columns(2)
-with col1:
+with st.sidebar:
+# with col1:
     credit_units = st.number_input("Credit Units", value=3)
     total_hours = st.number_input("Total Hours", value=54)
     weekly_hours = st.number_input("Weekly Hours", value=3)
 
-with col2:
+# with col2:
     number_of_topics = st.number_input("Number of Topics", value=5)
     citation_style = st.selectbox("Citation Style", ["APA", "MLA", "Chicago", "Harvard"])
-    document_title = st.text_input("Output Title",placeholder='default value: {course title}.docx')
+    document_title = st.text_input("Output Title",placeholder='Course_Outline.docx')
 
 # model = st.selectbox('Choose gpt model',['gpt-4-turbo-preview','gpt-3.5-turbo'])
-model = 'gpt-4-turbo-preview'
+# model = 'gpt-4o'
+model = 'gpt-3.5-turbo'
 # Combing the course details into a single string
 course_details = f"""Course Title: {course_title}
 Course Description: {course_description}
@@ -56,8 +59,11 @@ Target Students: {target_students}
 Total Hours: {total_hours}
 Class Hours per Week: {weekly_hours}"""
 
-
 if st.button("Generate Course Outline",use_container_width=True):
+    if course_title and course_description is None:
+        st.session_state.default_description = generate_description(course_title,target_students)
+ 
+
     st.session_state.start_time = time.time()
 
     with st.spinner("Generating Course Topics..."):
@@ -143,7 +149,9 @@ if st.session_state.output_file_path:
     st.write(st.session_state.learning_outcomes)
 
     # Provide download button/link
-    st.write(f"Execution Time: {st.session_state.execution_time}")
+    mins = round((st.session_state.execution_time // 60),0)
+    secs = round((st.session_state.execution_time % 60),0)
+    st.write(f"Execution Time: {int(mins)} minutes and {int(secs)} seconds")
     with open(st.session_state.output_file_path, "rb") as file:
         btn = st.download_button(   
             label="Download Course Outline",

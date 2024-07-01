@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 
+ 
 def scrape_site(url):
     try:
         # Fetch content from URL

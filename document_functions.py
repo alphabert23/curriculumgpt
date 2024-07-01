@@ -6,33 +6,35 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+from docx.enum.dml import MSO_THEME_COLOR_INDEX
+import docx
 
-def add_hyperlink(paragraph, url, text, color, underline):
-    # Create a new Run object and add a hyperlink
+def add_hyperlink(paragraph, text, url):
+    # This gets access to the document.xml.rels file and gets a new relation id value
     part = paragraph.part
-    r_id = part.relate_to(url, 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink', is_external=True)
+    r_id = part.relate_to(url, docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
 
-    hyperlink = OxmlElement('w:hyperlink')
-    hyperlink.set(qn('r:id'), r_id)
+    # Create the w:hyperlink tag and add needed values
+    hyperlink = docx.oxml.shared.OxmlElement('w:hyperlink')
+    hyperlink.set(docx.oxml.shared.qn('r:id'), r_id, )
 
-    new_run = OxmlElement('w:r')
-    rPr = OxmlElement('w:rPr')
+    # Create a w:r element and a new w:rPr element
+    new_run = docx.oxml.shared.OxmlElement('w:r')
+    rPr = docx.oxml.shared.OxmlElement('w:rPr')
 
-    # Add underline and color to the hyperlink
-    if underline:
-        u = OxmlElement('w:u')
-        u.set('val', 'single')
-        rPr.append(u)
-
-    color_elem = OxmlElement('w:color')
-    color_elem.set('val', color)
-    rPr.append(color_elem)
-
+    # Join all the xml elements together add add the required text to the w:r element
     new_run.append(rPr)
     new_run.text = text
     hyperlink.append(new_run)
 
-    paragraph._p.append(hyperlink)
+    # Create a new Run object and add the hyperlink into it
+    r = paragraph.add_run ()
+    r._r.append (hyperlink)
+
+    # A workaround for the lack of a hyperlink style (doesn't go purple after using the link)
+    # Delete this if using a template that has the hyperlink style in it
+    r.font.color.theme_color = MSO_THEME_COLOR_INDEX.HYPERLINK
+    r.font.underline = True
 
     return hyperlink
 
@@ -99,16 +101,16 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
 
     # Add Course Learning Outcomes (CLOs)
     doc.add_heading('Course Learning Outcomes (CLOs)', level=2)
+    doc.add_paragraph("By the end of this course, students will be able to:")
     for i, clo in enumerate(json_data['clos'], 1):
-        doc.add_paragraph(f"{clo}", style='ListBullet')
+        doc.add_paragraph(f"CLO {i}: {clo}", style='ListBullet')
 
     # Add Topics / Modules and Intended Learning Outcomes (ILOs)
     doc.add_heading('Topics / Modules and Intended Learning Outcomes', level=2)
-    for topic in json_data['topics']:
-        doc.add_paragraph(topic['topic'], style='ListNumber')
-        for ilo in topic['ilos']:
-            doc.add_paragraph(ilo, style='ListBullet2')
-
+    for i,topic in enumerate(json_data['topics']):
+        doc.add_paragraph(f"Topic {i+1}: {topic['topic']}", style='ListNumber')
+        for j,ilo in enumerate(topic['ilos']):
+            doc.add_paragraph(f"ILO {i+1}.{j+1}: {ilo}", style='ListBullet2')
     
     # Add a table to the document
     doc.add_heading('Weekly Activities', level=2)
@@ -165,14 +167,18 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
     # Add References section
     if "references" in json_data:
         doc.add_heading('References', level=2)
+        i = 1
         for reference in json_data['references']:
             # Add each reference with its link as plain text
             ref_paragraph = doc.add_paragraph(style='BodyText')
             ref_paragraph.add_run(reference['reference']).italic = True
             if 'link' in reference:
                 if reference['link'] != '':
-                    ref_paragraph.add_run("\nLink: ")
-                    ref_paragraph.add_run(reference['link'])
+                    # ref_paragraph.add_run("\nURL: ")
+                    # ref_paragraph.add_run(reference['link'])
+                    add_hyperlink(ref_paragraph, f'[{i}]', reference['link'])
+                    i+=1
+                    
 
     # Allow for titles containing .docx to still be saved as a word document ending in .docx instead of .docx.docx
     title = title.replace(".docx", "")
