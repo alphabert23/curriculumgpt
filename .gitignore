@@ -21,4 +21,6 @@ Machine Learning.docx
 hyperlink.docx
 output_logs.txt
 EduAssistant_Outlines/
- __pycache__/
+__pycache__/
+test.ipynb
+test.py
