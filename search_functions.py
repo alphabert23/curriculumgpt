@@ -4,7 +4,6 @@ from xml.etree import ElementTree as ET
 from bs4 import BeautifulSoup
 from gpt_functions import *
 import json
-import os
 import re
 
 data = toml.load("api_keys.toml")

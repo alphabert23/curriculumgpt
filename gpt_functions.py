@@ -9,7 +9,6 @@ data = toml.load("api_keys.toml")
 
 OPENAI_API_KEY= data['OPENAI_API_KEY']
 BROWSERLESS_API_KEY = data["BROWSERLESS_API_KEY"]
-PERPLEXITY_API_KEY = data['PERPLEXITY_API_KEY']
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 async_client = AsyncOpenAI(api_key=OPENAI_API_KEY)

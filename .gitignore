@@ -1,26 +1,2 @@
 # Ignore outputs
-course_outline_outputs/
 api_keys.toml
-scratch.ipynb
-rag_test.ipynb
-test.docx
-deep_learning_course.docx
-AAI.docx
-Machine Learning 2.docx
-Machine Learning 3.docx
-Machine Learning 4.docx
-Machine Learning 5.docx
-Machine Learning 6.docx
-Machine Learning 7.docx
-Machine Learning 8.docx
-Machine Learning 9.docx
-Machine Learning .docx
- .docx
-Course_Outline.docx
-Machine Learning.docx
-hyperlink.docx
-output_logs.txt
-EduAssistant_Outlines/
-__pycache__/
-test.ipynb
-test.py

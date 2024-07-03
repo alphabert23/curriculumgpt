@@ -1,7 +1,6 @@
 import streamlit as st
 from app_functions import *
 import os
-import base64
 import json
 import time
 import datetime
@@ -23,7 +22,6 @@ if 'default_description' not in st.session_state:
 left_co, cent_co,last_co = st.columns(3)
 with cent_co:
     st.image('CurriculumGPT Logo.png')
-# st.title("CurriculumGPT")
 # Title
 st.markdown("""
     <h1 style='text-align: center;'>CurriculumGPT</h1>
@@ -56,7 +54,6 @@ with st.sidebar:
         citation_style = st.selectbox("Citation Style", ["APA", "MLA", "Chicago", "Harvard"])
         model = st.selectbox('Choose gpt model',['gpt-4o','gpt-4-turbo','gpt-3.5-turbo'])
         document_title = st.text_input("Output Title",placeholder='Course_Outline.docx')
-
 
 if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     
