@@ -2,3 +2,4 @@
 api_keys.toml
 course_outline_outputs/
 .streamlit
+__pycache__
