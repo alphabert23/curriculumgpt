@@ -21,7 +21,8 @@ if 'default_description' not in st.session_state:
 # Secrets
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 BROWSERLESS_API_KEY = st.secrets['BROWSERLESS_API_KEY']
-SERPAPI_KEY = st.secrets['SERPAPI_KEY']
+SERP_API_KEY = st.secrets['SERP_API_KEY']
+SERP_API_KEY_2 = st.secrets['SERP_API_KEY_2']
 
 # Logo
 left_co, cent_co,last_co = st.columns(3)
@@ -83,7 +84,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
 
     with st.spinner("Searching Online for Reference Materials..."):
         # Get Search Results from Google Scholar
-        total_search_results = get_search_results(json.loads(queries))
+        total_search_results = get_search_results(json.loads(queries),api_key=SERP_API_KEY,api_key2=SERP_API_KEY_2)
     st.success("Search Results Generated")
 
     with st.spinner("Generating Learning Outcomes..."):

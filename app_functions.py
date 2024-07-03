@@ -38,7 +38,7 @@ def generate_queries(course_details, model='gpt-3.5-turbo',api_key=OPENAI_API_KE
     return queries
 
 # For each query, get the top 5 results from Google Scholar and combine into a single string
-def get_search_results(queries_json, num_results=5,api_key = SERPER_API_KEY):
+def get_search_results(queries_json, num_results=5,api_key = SERPER_API_KEY,api_key2=SERPER_API_KEY_2):
     """
     Params:
     queries_json (json): The json object containing the queries and topics from generate_queries() function
@@ -46,7 +46,7 @@ def get_search_results(queries_json, num_results=5,api_key = SERPER_API_KEY):
     total_search_results = ""
     for query in queries_json.get('queries', []):
         try:
-            results = search_google_scholar(query['query'], num_results,api_key=api_key)
+            results = search_google_scholar(query['query'], num_results,api_key=api_key,api_key2=api_key2)
             temp_result = f"Topic: {query['topic']}\nResults:\n"
             
             for search_result in results.get('organic_results', []):

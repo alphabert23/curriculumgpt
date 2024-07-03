@@ -8,12 +8,14 @@ import re
 
 try:
     data = toml.load("api_keys.toml")
-    SERPER_API_KEY = data['SERPAPI_KEY']
+    SERPER_API_KEY = data['SERP_API_KEY']
+    SERPER_API_KEY_2 = data['SERP_API_KEY_2']
 except:
     SERPER_API_KEY = ""
+    SERPER_API_KEY_2 = ""
 
 # Input search queries to search in Google Scholar
-def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api_key = SERPER_API_KEY):
+def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api_key = SERPER_API_KEY,api_key2= SERPER_API_KEY_2):
     """
     Params:
     query (str): The search query
@@ -36,6 +38,20 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api
     # Make the API request
     response = requests.get("https://serpapi.com/search", params=params)
 
+    if response.status_code == 429:
+        # Try again with API key 2
+        params = {
+            "engine": "google_scholar",
+            "q": query,  # Your search query
+            "api_key": api_key2,
+            "as_ylo": as_ylo,
+            "hl":language,
+            'num': num_results
+        }
+
+        # Make the API request
+        response = requests.get("https://serpapi.com/search", params=params)
+    
     # Check if the request was successful
     if response.status_code == 200:
         # Parse the JSON response
