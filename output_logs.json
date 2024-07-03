@@ -547,5 +547,65 @@
         "Execution Time": 64.05158948898315,
         "Save Location": "course_outline_outputs\\Machine_Learning_Jun_Albert_Pardillo_Course_Outline.docx",
         "Date": "2024-07-01 14:08:22"
+    },
+    {
+        "Course Details": {
+            "Course Title": "machine learning",
+            "Course Description": "\"Machine Learning\" introduces 1st-year students to the fundamentals of artificial intelligence and data analysis. This course covers key concepts such as algorithms, statistical modeling, and pattern recognition to teach students how machines can learn from data and make predictions. Through hands-on projects and practical applications, students will develop skills in programming, data manipulation, and model evaluation. By the end of the course, students will be equipped to understand and implement basic machine learning techniques, setting a strong foundation for further exploration in this rapidly growing field.",
+            "Instructor Name": "Albert Pardillo",
+            "Credit Units": 3,
+            "Target Students": "1st year students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 115.27661895751953,
+        "Save Location": "course_outline_outputs\\machine_learning_Albert_Pardillo_Course_Outline.docx",
+        "Date": "2024-07-01 16:46:36"
+    },
+    {
+        "Course Details": {
+            "Course Title": "LLM",
+            "Course Description": "\"LLM (Logic, Language, and Mathematics) is a dynamic course designed for 3rd-year BS Computer Science students. This course delves into the fundamental principles of logic, explores the intricacies of various programming languages, and applies mathematical concepts to problem-solving in computer science. Students can expect to enhance their critical thinking skills, deepen their understanding of programming languages, and strengthen their mathematical reasoning abilities. Through a combination of theoretical learning and practical application, LLM equips students with the essential tools and knowledge needed to excel in the ever-evolving field of computer science.\"",
+            "Instructor Name": "Michael Lee",
+            "Credit Units": 3,
+            "Target Students": "3rd years BS Computer Scinece",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 106.68779444694519,
+        "Save Location": "course_outline_outputs\\LLM_Michael_Lee_Course_Outline.docx",
+        "Date": "2024-07-01 18:16:47"
+    },
+    {
+        "Course Details": {
+            "Course Title": "\u4eba\u5de5\u667a\u6167\u502b\u7406",
+            "Course Description": "\"\u4eba\u5de5\u667a\u6167\u502b\u7406\" is a specialized course designed for fourth-year undergraduate and first and second-year master's students. This course delves into the ethical considerations surrounding artificial intelligence (AI), exploring topics such as privacy, bias, accountability, and the impact of AI on society. Students will engage in critical discussions, case studies, and ethical frameworks to develop a deep understanding of the ethical implications of AI technologies. By the end of the course, students will be equipped to navigate complex ethical dilemmas in the rapidly evolving field of AI.",
+            "Instructor Name": "Dr. Tsung-Lu Michael Lee",
+            "Credit Units": 3,
+            "Target Students": "\u5927\u5b78\u90e8\u56db\u5e74\u7d1a\u3001\u78a9\u58eb\u4e00\u3001\u4e8c\u5e74\u7d1a",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 131.1563892364502,
+        "Save Location": "course_outline_outputs\\\u4eba\u5de5\u667a\u6167\u502b\u7406_Dr._Tsung-Lu_Michael_Lee_Course_Outline.docx",
+        "Date": "2024-07-03 15:35:17"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Digital Image Processing and Applications",
+            "Course Description": "\"Digital Image Processing and Applications\" is a specialized course designed for 4th Year Electrical Engineering Students focusing on the fundamental principles and practical applications of processing digital images. Students will explore topics such as image enhancement, segmentation, feature extraction, and pattern recognition. Through hands-on projects and case studies, participants will develop skills in utilizing advanced software tools for image analysis and manipulation. This course equips students with the knowledge and techniques needed to tackle real-world challenges in fields like medical imaging, robotics, and remote sensing. Gain a deeper understanding of digital image processing and its diverse engineering applications in this dynamic course.",
+            "Instructor Name": "Jun Albert Pardillo",
+            "Credit Units": 3,
+            "Target Students": "4th Year Electrical Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 135.78556203842163,
+        "Save Location": "course_outline_outputs\\Digital_Image_Processing_and_Applications_Jun_Albert_Pardillo_Course_Outline.docx",
+        "Date": "2024-07-03 15:56:10"
     }
 ]

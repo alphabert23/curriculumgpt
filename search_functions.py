@@ -6,7 +6,6 @@ from gpt_functions import *
 import json
 import os
 import re
-from serpapi import GoogleSearch
 
 data = toml.load("api_keys.toml")
 serper_api_key = data['SERPAPI_KEY']
