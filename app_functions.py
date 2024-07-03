@@ -3,7 +3,7 @@ from gpt_functions import *
 from document_functions  import *
 
 # Generate topics and search queries for each topic
-def generate_queries(course_details, number_of_topics=5, model='gpt-3.5-turbo'):
+def generate_queries(course_details, number_of_topics=5, model='gpt-3.5-turbo',api_key=OPENAI_API_KEY):
     prompt = f"""
     You are a capable and experienced researcher and professional educator. Provided are details regarding a course outline for which we need to look for references. 
 
@@ -30,7 +30,7 @@ def generate_queries(course_details, number_of_topics=5, model='gpt-3.5-turbo'):
     """
     
     try:
-        queries = gpt_response(prompt, model, response_format='json_object')
+        queries = gpt_response(prompt, model, response_format='json_object',api_key=api_key)
     except Exception as e:
         print(f"Error generating queries: {e}")
         queries = {"queries": []}
@@ -38,7 +38,7 @@ def generate_queries(course_details, number_of_topics=5, model='gpt-3.5-turbo'):
     return queries
 
 # For each query, get the top 5 results from Google Scholar and combine into a single string
-def get_search_results(queries_json, num_results=5):
+def get_search_results(queries_json, num_results=5,api_key = SERPER_API_KEY):
     """
     Params:
     queries_json (json): The json object containing the queries and topics from generate_queries() function
@@ -46,7 +46,7 @@ def get_search_results(queries_json, num_results=5):
     total_search_results = ""
     for query in queries_json.get('queries', []):
         try:
-            results = search_google_scholar(query['query'], num_results)
+            results = search_google_scholar(query['query'], num_results,api_key=api_key)
             temp_result = f"Topic: {query['topic']}\nResults:\n"
             
             for search_result in results.get('organic_results', []):
@@ -64,41 +64,8 @@ def get_search_results(queries_json, num_results=5):
     
     return total_search_results
 
-# Generate Learning Outcomes
-# def generate_learning_outcomes(course_details, total_search_results, citation_style='APA', number_of_topics=5,model = 'gpt-4-turbo-preview'):
-#     """
-#     Params:
-#     course_details (str): The course details inputted by user
-#     total_search_results (str): The search results from search_google_scholar() function
-#     """
-#     learning_outcomes_prompt = f'''You are a highly-capable researcher and professional educator. 
-#     Provided below are course details for a course outline you will need to generate.
-
-# Course Details:
-#     {course_details}
-
-# You are tasked to generate the following for a course outline for this course:
-#     1 Course Learning Outcomes (CLOs)
-#     2 Topics/ Modules and Intended Learning Outcomes (ILOs)
-#         - each topic requires at least 2 ILOs
-#         - each topic should be marked by starting with "Topic #", and each ILO should be marked by starting with "ILO #"
-#         - add the source/s for each topic
-#         - there should be {number_of_topics} topics in total
-#     3 References (at least 1 reference per topic and in {citation_style} format)
-        
-# Provided below are the search results for reference material from Google Scholar for suggested topics to cover in this course. 
-# You may decide which topics and search results to include in the final result. 
-# Do not include all search results in the final course outline, and do not add sources not included below.
-
-# {total_search_results}
-# '''
-
-#     learning_outcomes = gpt_response(learning_outcomes_prompt,model)
-#     return learning_outcomes
-
 # Generate Learning Outcomes following Bloom's Taxonomy
-def generate_learning_outcomes(course_details, total_search_results, citation_style='APA', number_of_topics=5, 
-model='gpt-3.5-turbo'):
+def generate_learning_outcomes(course_details, total_search_results, citation_style='APA', model='gpt-3.5-turbo',api_key=OPENAI_API_KEY):
     """
     Params:
     course_details (str): The course details inputted by user
@@ -118,7 +85,7 @@ model='gpt-3.5-turbo'):
     Search Results:
     {total_search_results}"""
 
-    filtered_search_results = gpt_response(relevant_references_prompt,'gpt-3.5-turbo')
+    filtered_search_results = gpt_response(relevant_references_prompt,model,api_key=api_key)
 
     # print(filtered_search_results)
 
@@ -182,11 +149,11 @@ Provided below are the search results for reference material from Google Scholar
 
 '''
 
-    learning_outcomes = gpt_response(learning_outcomes_prompt, model)
+    learning_outcomes = gpt_response(learning_outcomes_prompt, model,api_key=api_key)
     return learning_outcomes
 
 # Generate Course Outline and Activities
-def generate_course_outline(course_details, learning_outcomes, number_of_topics=5, total_hours=54, weekly_hours=3,model = 'gpt-3.5-turbo'):
+def generate_course_outline(course_details, learning_outcomes, number_of_topics=5, total_hours=54, weekly_hours=3,model = 'gpt-3.5-turbo',api_key=OPENAI_API_KEY):
     activities_prompt = f'''You are a highly-capable researcher and curricular development expert. Provided below are course details for a course outline you will need to generate.
 
     Course Details:
@@ -205,9 +172,9 @@ def generate_course_outline(course_details, learning_outcomes, number_of_topics=
     '''
 
     # Initial prompt output to generate course outline with text model
-    course_outline = gpt_response(activities_prompt,model, response_format='text')
+    course_outline = gpt_response(activities_prompt,model, response_format='text',api_key=api_key)
 
-    print(course_outline)
+    # print(course_outline)
 
     # Convert initial output to JSON format
     json_prompt = f"""Convert the provided course outline details into JSON format.
@@ -274,15 +241,15 @@ def generate_course_outline(course_details, learning_outcomes, number_of_topics=
     {course_outline}
     """
 
-    course_outline_json = gpt_response(json_prompt,model, response_format='json_object')
+    course_outline_json = gpt_response(json_prompt,model, response_format='json_object',api_key=api_key)
 
     return  course_outline_json
 
 # Generate course description
-def generate_description(course_title,target_students, model = 'gpt-3.5-turbo'):
+def generate_description(course_title,target_students, model = 'gpt-3.5-turbo',api_key = OPENAI_API_KEY):
     description_prompt = f"""You are a highly-capable educator and curricular development expert. Create a comprehensive but concise description for a course called "{course_title}" which is meant for {target_students}. 
     Keep the description within 100 words, and provide a general overview of what one  can expect from this course."""
 
-    description = gpt_response(description_prompt,model)
+    description = gpt_response(description_prompt,model,api_key=api_key)
 
     return description

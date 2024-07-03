@@ -18,6 +18,11 @@ if 'default_description' not in st.session_state:
     st.session_state.default_description = None
 
 
+# Secrets
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
+BROWSERLESS_API_KEY = st.secrets['BROWSERLESS_API_KEY']
+SERPAPI_KEY = st.secrets['SERPAPI_KEY']
+
 # Logo
 left_co, cent_co,last_co = st.columns(3)
 with cent_co:

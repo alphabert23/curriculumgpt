@@ -21,7 +21,7 @@ if 'default_description' not in st.session_state:
 # Logo
 left_co, cent_co,last_co = st.columns(3)
 with cent_co:
-    st.image('CurriculumGPT Logo.png')
+    st.image('CurriculumGPT_Logo.png')
 # Title
 st.markdown("""
     <h1 style='text-align: center;'>CurriculumGPT</h1>
@@ -49,11 +49,12 @@ with st.sidebar:
         credit_units = st.number_input("Credit Units", value=3)
         total_hours = st.number_input("Total Hours", value=54)
         weekly_hours = st.number_input("Weekly Hours", value=3)
-    with st.expander("COURSE OUTLINE INPUTS", True):
+    with st.expander("PROCESS INPUTS", True):
         number_of_topics = st.number_input("Number of Topics", value=5)
         citation_style = st.selectbox("Citation Style", ["APA", "MLA", "Chicago", "Harvard"])
         model = st.selectbox('Choose gpt model',['gpt-4o','gpt-4-turbo','gpt-3.5-turbo'])
         document_title = st.text_input("Output Title",placeholder='Course_Outline.docx')
+    st.write("*This app was designed on Streamlit by Jun Albert S. Pardillo (2024).*")
 
 if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     

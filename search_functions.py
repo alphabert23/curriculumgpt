@@ -7,102 +7,10 @@ import json
 import re
 
 data = toml.load("api_keys.toml")
-serper_api_key = data['SERPAPI_KEY']
-brwoserless_api_key = data['BROWSERLESS_API_KEY']
-
-def find_urls(text):
-    # Regex pattern to find URLs (http, https, www)
-    url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+|www\.(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
-    
-    # Find all matches in the text and return them
-    urls = re.findall(url_pattern, text)
-    return urls
-
-def read_file_as_string(file_path):
-    """Reads the content of a file and returns it as a string."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return file.read()
-
-def fetch_page_content(url, max_length):
-    url = url.strip()
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-
-    try:
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            # Determine the parser type based on URL or content-type
-            if url.lower().endswith('.xml') or 'xml' in response.headers.get('Content-Type', ''):
-                parser = 'xml'
-            else:
-                parser = 'html.parser'
-            
-            soup = BeautifulSoup(response.content, parser)
-            
-            # Define the tags you want to include
-            desired_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span']
-
-            # Extracting the text within the specified tags
-            extracted_texts = []
-            seen_texts = set()  # Set to track texts that have already been added
-
-            for tag in soup.find_all(desired_tags):
-                text = tag.text.strip()
-                if text and text not in seen_texts:  # Check if text is not empty and not seen before
-                    clean_tag = f"<{tag.name}> {text} </{tag.name}>"  # Constructing tag string manually
-                    extracted_texts.append(clean_tag)
-                    seen_texts.add(text)  # Add text to the set of seen texts
-
-            # Handling for div tags to include only the innermost with text
-            for div_tag in soup.find_all('div'):
-                text = div_tag.text.strip()
-                if text and not div_tag.find('div') and text not in seen_texts:  # No inner div tags and has text not seen before
-                    clean_div = f"<div> {text} </div>"  # Constructing div string manually
-                    extracted_texts.append(clean_div)
-                    seen_texts.add(text)  # Add text to the set of seen texts
-
-            # Convert the list of texts to a single string and trim it to the maximum length
-            extracted_texts = '\n'.join(extracted_texts)[:max_length]
-
-            hyperlinks = [a.get('href') for a in soup.find_all('a', href=True) if 'http' in a.get('href')]
-
-            return extracted_texts,hyperlinks
-
-        else:
-            print(f"Failed to retrieve page {url}: {response.status_code}\n{response.text}")
-    except Exception as e:
-        print(f"Error fetching page content: {e}")      
-
-# 2. Store the information in data source
-
-def generate_queries(course_details, numnber_of_queries=5):
-    prompt = f"""{course_details}\n\nProvided are details regarding a course outline for which we need to look for references. 
-Generate {numnber_of_queries} queries to search in Google Scholar to look for potential academic resources to be used as reference materials for this course. 
-Output only the queries one line at a time and nothing else."""
-    queries = gpt_response(prompt,'gpt-4-1106-preview').replace('"',"")
-    return queries
-
-# Part 2
-# Given a website we use Google SERP API to get competitor information
-def search(query):
-    url = "https://google.serper.dev/search"
-
-    payload = json.dumps({
-        "q": query
-    })
-
-    headers = {
-        'X-API-KEY': data["SERP_API_KEY"],
-        'Content-Type': 'application/json'
-    }
-
-    response = requests.request("POST", url, headers=headers, data=payload)
-    # print(response.text)
-    json_response = json.loads(response.text)
-    return json_response
+SERPER_API_KEY = data['SERPAPI_KEY']
 
 # Input search queries to search in Google Scholar
-def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
+def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api_key = SERPER_API_KEY):
     """
     Params:
     query (str): The search query
@@ -111,8 +19,6 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
     as_ylo (int): The year of the last publication to be returned
     """
     
-    # Your SerpAPI key
-    api_key = serper_api_key
 
     # Set up the search parameters
     params = {
