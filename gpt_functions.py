@@ -2,10 +2,12 @@ from openai import OpenAI
 import toml
 
 
-data = toml.load("api_keys.toml")
-
-OPENAI_API_KEY= data['OPENAI_API_KEY']
-
+try:
+    data = toml.load("api_keys.toml")
+    OPENAI_API_KEY= data['OPENAI_API_KEY']
+except:
+    OPENAI_API_KEY = ''
+    
 def gpt_response(prompt, model = 'gpt-3.5-turbo-1106',max_tokens = 4000,response_format = "text", temperature=0.5,system_message = "You are a helpful assistant",api_key = OPENAI_API_KEY):
     """Standard function for generating a GPT response
 

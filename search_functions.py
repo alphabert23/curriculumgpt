@@ -6,8 +6,11 @@ from gpt_functions import *
 import json
 import re
 
-data = toml.load("api_keys.toml")
-SERPER_API_KEY = data['SERPAPI_KEY']
+try:
+    data = toml.load("api_keys.toml")
+    SERPER_API_KEY = data['SERPAPI_KEY']
+except:
+    SERPER_API_KEY = ""
 
 # Input search queries to search in Google Scholar
 def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api_key = SERPER_API_KEY):
