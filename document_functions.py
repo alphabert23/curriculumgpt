@@ -6,6 +6,8 @@ from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml import OxmlElement
 from docx.enum.dml import MSO_THEME_COLOR_INDEX
 import docx
+from io import BytesIO
+
 
 def add_hyperlink(paragraph, text, url):
     # This gets access to the document.xml.rels file and gets a new relation id value
@@ -72,52 +74,37 @@ def set_cell_border(cell, **kwargs):
                 if key in edge_data:
                     el.set(key, str(edge_data[key]))
 
-def create_word_document_from_json(json_data, title="Course_Outline.docx"):
-
+def create_word_document_from_json(json_data, title="Course_Outline.docx", streamlit=False):
     doc = Document()
     doc.add_heading('Course Outline', level=1)
 
-    # Create a table for course details
     details_table = doc.add_table(rows=2, cols=2)
-
-    # Set table style to enable borders
     details_table.style = 'Table Grid'
-
-    # Add course details in two columns
     detail_keys = ["course_title", "instructor_name", "credit_units", "total_hours"]
     for i, key in enumerate(detail_keys):
         cell = details_table.cell(i // 2, i % 2)
         cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
         cell.text = f"{key.replace('_', ' ').capitalize()}: {json_data[key]}"
-        # Make the detail name bold
         for paragraph in cell.paragraphs:
             paragraph.runs[0].font.bold = True
 
-    # Add Course Description
     doc.add_heading("Course Description:", level=2)
     doc.add_paragraph(json_data["course_description"], style='BodyText')
 
-    # Add Course Learning Outcomes (CLOs)
     doc.add_heading('Course Learning Outcomes (CLOs)', level=2)
     doc.add_paragraph("By the end of this course, students will be able to:")
     for i, clo in enumerate(json_data['clos'], 1):
         doc.add_paragraph(f"CLO {i}: {clo}", style='ListBullet')
 
-    # Add Topics / Modules and Intended Learning Outcomes (ILOs)
     doc.add_heading('Topics / Modules and Intended Learning Outcomes', level=2)
-    for i,topic in enumerate(json_data['topics']):
+    for i, topic in enumerate(json_data['topics']):
         doc.add_paragraph(f"Topic {i+1}: {topic['topic']}", style='ListNumber')
-        for j,ilo in enumerate(topic['ilos']):
+        for j, ilo in enumerate(topic['ilos']):
             doc.add_paragraph(f"ILO {i+1}.{j+1}: {ilo}", style='ListBullet2')
     
-    # Add a table to the document
     doc.add_heading('Weekly Activities', level=2)
     table = doc.add_table(rows=1, cols=5)
-
-    # Set table style to enable borders
     table.style = 'Table Grid'
-
-    # Add headers to the table
     hdr_cells = table.rows[0].cells
     headers = ["Week No.", "Topic", "Activity Description", "Expected Output", "Assessment Tools"]
     for i, header in enumerate(headers):
@@ -128,7 +115,6 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
         run[0].font.size = Pt(12)
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-        # Set column widths
         if header == "Week No.":
             hdr_cells[i].width = Inches(0.75)
         elif header == "Activity Description":
@@ -136,7 +122,6 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
         else:
             hdr_cells[i].width = Inches(1.5)
 
-    # Add rows to the table from the JSON data
     for activity in json_data['activities']:
         row_cells = table.add_row().cells
         row_cells[0].text = activity['week']
@@ -150,36 +135,31 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx"):
                             bottom={"sz": 12, "val": "single"},
                             start={"sz": 12, "val": "single"},
                             end={"sz": 12, "val": "single"})
-
-            # Set font size for cells
             for paragraph in cell.paragraphs:
                 for run in paragraph.runs:
                     run.font.size = Pt(10)
-            
-            # Set topic bold
             if cell == row_cells[1]:
                 for paragraph in cell.paragraphs:
                     for run in paragraph.runs:
                         run.font.bold = True
 
-    # Add References section
     if "references" in json_data:
         doc.add_heading('References', level=2)
         i = 1
         for reference in json_data['references']:
-            # Add each reference with its link as plain text
             ref_paragraph = doc.add_paragraph(style='BodyText')
             ref_paragraph.add_run(reference['reference']).italic = True
-            if 'link' in reference:
-                if reference['link'] != '':
-                    # ref_paragraph.add_run("\nURL: ")
-                    # ref_paragraph.add_run(reference['link'])
-                    add_hyperlink(ref_paragraph, f'[{i}]', reference['link'])
-                    i+=1
-                    
+            if 'link' in reference and reference['link'] != '':
+                add_hyperlink(ref_paragraph, f'[{i}]', reference['link'])
+                i += 1
 
-    # Allow for titles containing .docx to still be saved as a word document ending in .docx instead of .docx.docx
     title = title.replace(".docx", "")
-    doc.save(title+'.docx')
-    return title+'.docx'
+    if streamlit:
+        buffer = BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
+        return buffer
+    else:
+        doc.save(title+'.docx')
+        return title+'.docx'
 

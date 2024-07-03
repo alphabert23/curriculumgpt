@@ -109,7 +109,9 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
         course_outline_json = json.loads(course_outline)
 
     # Create word document from course outline json
-    st.session_state.doc_path = create_word_document_from_json(course_outline_json,title=document_title)
+    # st.session_state.doc_path = create_word_document_from_json(course_outline_json,title=document_title,streamlit = True)
+    st.session_state.doc_buffer = create_word_document_from_json(course_outline_json, title=document_title, streamlit=True)
+    st.session_state.output_file_name = f"{document_title}.docx"
     end_time = time.time()
     st.session_state.execution_time = end_time - st.session_state.start_time
     st.session_state.start_time = None
@@ -123,37 +125,36 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     if document_title == '':
         document_title = f"{course_title.replace(' ','_')}_{instructor_name.replace(' ','_')}_Course_Outline"
     st.session_state.output_file_name = f"{document_title}.docx"
-    st.session_state.output_file_path = os.path.join(outputs_folder, st.session_state.output_file_name)
-    with open(st.session_state.doc_path, "rb") as file:
-        with open(st.session_state.output_file_path, "wb") as output_file:
-            output_file.write(file.read())
+    # st.session_state.output_file_path = os.path.join(outputs_folder, st.session_state.output_file_name)
+    # with open(st.session_state.doc_path, "rb") as file:
+    #     with open(st.session_state.output_file_path, "wb") as output_file:
+    #         output_file.write(file.read())
     
     # Log course details, execution time, and save location
-    log_details = {
-        "Course Details": {
-            "Course Title": course_title,
-            "Course Description": course_description,
-            "Instructor Name": instructor_name,
-            "Credit Units": credit_units,
-            "Target Students": target_students,
-            "Total Hours": total_hours,
-            "Class Hours per Week": weekly_hours
-        },
-        "Model": model,
-        "Execution Time": st.session_state.execution_time,
-        "Save Location": st.session_state.output_file_path,
-        "Date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    }
+    # log_details = {
+    #     "Course Details": {
+    #         "Course Title": course_title,
+    #         "Course Description": course_description,
+    #         "Instructor Name": instructor_name,
+    #         "Credit Units": credit_units,
+    #         "Target Students": target_students,
+    #         "Total Hours": total_hours,
+    #         "Class Hours per Week": weekly_hours
+    #     },
+    #     "Model": model,
+    #     "Execution Time": st.session_state.execution_time,
+    #     "Date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    # }
 
-    log_file = 'output_logs.json'
-    if os.path.exists(log_file):
-        with open(log_file, 'r') as f:
-            logs = json.load(f)
-    else:
-        logs = []
-    logs.append(log_details)
-    with open(log_file, 'w') as f:
-        json.dump(logs, f, indent=4)
+    # log_file = 'output_logs.json'
+    # if os.path.exists(log_file):
+    #     with open(log_file, 'r') as f:
+    #         logs = json.load(f)
+    # else:
+    #     logs = []
+    # logs.append(log_details)
+    # with open(log_file, 'w') as f:
+    #     json.dump(logs, f, indent=4)
 
 # Once process is finished, provide output
 if st.session_state.output_file_path:
@@ -165,9 +166,9 @@ if st.session_state.output_file_path:
     secs = round((st.session_state.execution_time % 60),0)
     st.write(f"Execution Time: {int(mins)} minutes and {int(secs)} seconds")
     with open(st.session_state.output_file_path, "rb") as file:
-        btn = st.download_button(   
+        btn = st.download_button(
             label="Download Course Outline",
-            data=file,
+            data=st.session_state.doc_buffer,
             file_name=st.session_state.output_file_name,
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )

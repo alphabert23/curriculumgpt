@@ -3,3 +3,5 @@ api_keys.toml
 course_outline_outputs/
 .streamlit
 __pycache__
+.docx
+output_logs.json
