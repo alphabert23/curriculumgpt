@@ -1,2 +1,4 @@
 # Ignore outputs
 api_keys.toml
+course_outline_outputs/
+.streamlit
