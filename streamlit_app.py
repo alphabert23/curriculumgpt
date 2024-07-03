@@ -41,7 +41,7 @@ with st.expander("MAIN INPUTS",True):
     if st.button("*Auto-generate Description*") :
         if course_title and target_students is not None:
             st.session_state.default_description = generate_description(course_title,target_students)
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("*Please input both Course Title and Target Students*")
 
@@ -55,7 +55,6 @@ with st.sidebar:
         total_hours = st.number_input("Total Hours", value=54)
         weekly_hours = st.number_input("Weekly Hours", value=3)
     with st.expander("PROCESS INPUTS", True):
-        number_of_topics = st.number_input("Number of Topics", value=5)
         citation_style = st.selectbox("Citation Style", ["APA", "MLA", "Chicago", "Harvard"])
         model = st.selectbox('Choose gpt model',['gpt-4o','gpt-4-turbo','gpt-3.5-turbo'])
         document_title = st.text_input("Output Title",placeholder='Course_Outline.docx')
@@ -93,7 +92,6 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             course_details=course_details, 
             total_search_results=total_search_results, 
             citation_style=citation_style,
-            number_of_topics=number_of_topics,
             model=model
         )
 
@@ -104,7 +102,6 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
         course_outline = generate_course_outline(
             course_details=course_details, 
             learning_outcomes=learning_outcomes, 
-            number_of_topics=number_of_topics, 
             total_hours=total_hours, 
             weekly_hours=weekly_hours,
             model=model

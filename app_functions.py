@@ -3,13 +3,13 @@ from gpt_functions import *
 from document_functions  import *
 
 # Generate topics and search queries for each topic
-def generate_queries(course_details, number_of_topics=5, model='gpt-3.5-turbo',api_key=OPENAI_API_KEY):
+def generate_queries(course_details, model='gpt-3.5-turbo',api_key=OPENAI_API_KEY):
     prompt = f"""
     You are a capable and experienced researcher and professional educator. Provided are details regarding a course outline for which we need to look for references. 
 
     Figure out the topics that are relevant to this course and generate queries to search for academic resources on Google Scholar.
     For the arrangement of the topics, make sure the flow is appropriate for the course i.e., beginning with a general topic or overview and then moving on to more specific topics.
-    Generate a total of {number_of_topics} queries for the same number of topics to search in Google Scholar. Note that since the purpose of these queries will be to find suitable references tothe course provided, limit the query to only find academic books appropriate for use as references (i.e. textbooks, journals, etc.) 
+    Generate a 5 queries for the same number of topics to search in Google Scholar. Note that since the purpose of these queries will be to find suitable references tothe course provided, limit the query to only find academic books appropriate for use as references (i.e. textbooks, journals, etc.) 
 
     Output only the queries in the following json format:
     {{
@@ -153,7 +153,7 @@ Provided below are the search results for reference material from Google Scholar
     return learning_outcomes
 
 # Generate Course Outline and Activities
-def generate_course_outline(course_details, learning_outcomes, number_of_topics=5, total_hours=54, weekly_hours=3,model = 'gpt-3.5-turbo',api_key=OPENAI_API_KEY):
+def generate_course_outline(course_details, learning_outcomes, total_hours=54, weekly_hours=3,model = 'gpt-3.5-turbo',api_key=OPENAI_API_KEY):
     activities_prompt = f'''You are a highly-capable researcher and curricular development expert. Provided below are course details for a course outline you will need to generate.
 
     Course Details:
@@ -163,7 +163,7 @@ def generate_course_outline(course_details, learning_outcomes, number_of_topics=
     -------------------
 
     From the provided learning outcomes, create weekly activities for the course. 
-    This course is divided into {number_of_topics} topics with a total of {total_hours} hours for the whole semester divided into {weekly_hours} hours per week ({total_hours//weekly_hours} weeks in total).
+    This course is divided into a total of {total_hours} hours for the whole semester divided into {weekly_hours} hours per week ({total_hours//weekly_hours} weeks in total).
 
     You may stretch one topic over the course of multiple weeks or add topics not included in the learning outcomes
     Each activity should have a week number, topic, activity description, expected output or assessment, and assessment tools.
