@@ -40,7 +40,7 @@ with st.expander("MAIN INPUTS",True):
 
     if st.button("*Auto-generate Description*") :
         if course_title and target_students is not None:
-            st.session_state.default_description = generate_description(course_title,target_students)
+            st.session_state.default_description = generate_description(course_title,target_students,api_key=OPENAI_API_KEY)
             st.rerun()
         else:
             st.error("*Please input both Course Title and Target Students*")
@@ -63,7 +63,7 @@ with st.sidebar:
 if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     
     if course_title and course_description is None:
-        st.session_state.default_description = generate_description(course_title,target_students)
+        st.session_state.default_description = generate_description(course_title,target_students,api_key=OPENAI_API_KEY)
  
     # Combing the course details into a single string
     course_details = f"""Course Title: {course_title}
@@ -78,7 +78,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
 
     with st.spinner("Generating Course Topics..."):
         # Genereate topics and search queries
-        queries =  generate_queries(course_details=course_details)
+        queries =  generate_queries(course_details=course_details,api_key=OPENAI_API_KEY)
     st.success("Queries Generated")
 
     with st.spinner("Searching Online for Reference Materials..."):
@@ -92,7 +92,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             course_details=course_details, 
             total_search_results=total_search_results, 
             citation_style=citation_style,
-            model=model
+            model=model,api_key=OPENAI_API_KEY
         )
 
     learning_outcomes = st.session_state.learning_outcomes
@@ -104,7 +104,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             learning_outcomes=learning_outcomes, 
             total_hours=total_hours, 
             weekly_hours=weekly_hours,
-            model=model
+            model=model,api_key=OPENAI_API_KEY
         ) 
         course_outline_json = json.loads(course_outline)
 
@@ -125,36 +125,6 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     if document_title == '':
         document_title = f"{course_title.replace(' ','_')}_{instructor_name.replace(' ','_')}_Course_Outline"
     st.session_state.output_file_name = f"{document_title}.docx"
-    # st.session_state.output_file_path = os.path.join(outputs_folder, st.session_state.output_file_name)
-    # with open(st.session_state.doc_path, "rb") as file:
-    #     with open(st.session_state.output_file_path, "wb") as output_file:
-    #         output_file.write(file.read())
-    
-    # Log course details, execution time, and save location
-    # log_details = {
-    #     "Course Details": {
-    #         "Course Title": course_title,
-    #         "Course Description": course_description,
-    #         "Instructor Name": instructor_name,
-    #         "Credit Units": credit_units,
-    #         "Target Students": target_students,
-    #         "Total Hours": total_hours,
-    #         "Class Hours per Week": weekly_hours
-    #     },
-    #     "Model": model,
-    #     "Execution Time": st.session_state.execution_time,
-    #     "Date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    # }
-
-    # log_file = 'output_logs.json'
-    # if os.path.exists(log_file):
-    #     with open(log_file, 'r') as f:
-    #         logs = json.load(f)
-    # else:
-    #     logs = []
-    # logs.append(log_details)
-    # with open(log_file, 'w') as f:
-    #     json.dump(logs, f, indent=4)
 
 # Once process is finished, provide output
 if st.session_state.output_file_path:
