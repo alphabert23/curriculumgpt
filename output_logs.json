@@ -1,0 +1,17 @@
+[
+    {
+        "Course Details": {
+            "Course Title": "Biomedical Information Processing",
+            "Course Description": "\"Biomedical Information Processing\" is a cutting-edge course designed for 4th Year Computer Science and Information Engineering students. This course explores the intersection of technology and healthcare, focusing on processing and analyzing biomedical data. Students will delve into topics such as medical imaging, bioinformatics, electronic health records, and machine learning applications in healthcare. Through hands-on projects and case studies, students will develop skills in data analysis, algorithm development, and software implementation specific to the biomedical field. By the end of the course, students will be equipped with the knowledge and tools to contribute to advancements in healthcare technology.",
+            "Instructor Name": "Albert Pardillo",
+            "Credit Units": 3,
+            "Target Students": "4th Year Computer Science and Information Engineering Students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 98.75223326683044,
+        "Save Location": "course_outline_outputs\\Biomedical_Information_Processing_Albert_Pardillo_Course_Outline.docx",
+        "Date": "2024-07-03 18:25:48"
+    }
+]

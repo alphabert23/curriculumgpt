@@ -20,7 +20,6 @@ if 'default_description' not in st.session_state:
 
 # Secrets
 OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-BROWSERLESS_API_KEY = st.secrets['BROWSERLESS_API_KEY']
 SERP_API_KEY = st.secrets['SERP_API_KEY']
 SERP_API_KEY_2 = st.secrets['SERP_API_KEY_2']
 
