@@ -17,12 +17,6 @@ if 'learning_outcomes' not in st.session_state:
 if 'default_description' not in st.session_state:
     st.session_state.default_description = None
 
-
-# Secrets
-OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
-SERP_API_KEY = st.secrets['SERP_API_KEY']
-SERP_API_KEY_2 = st.secrets['SERP_API_KEY_2']
-
 # Logo
 left_co, cent_co,last_co = st.columns(3)
 with cent_co:
@@ -40,7 +34,7 @@ with st.expander("MAIN INPUTS",True):
 
     if st.button("*Auto-generate Description*") :
         if course_title and target_students is not None:
-            st.session_state.default_description = generate_description(course_title,target_students,api_key=OPENAI_API_KEY)
+            st.session_state.default_description = generate_description(course_title,target_students)
             st.rerun()
         else:
             st.error("*Please input both Course Title and Target Students*")
@@ -63,7 +57,7 @@ with st.sidebar:
 if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
     
     if course_title and course_description is None:
-        st.session_state.default_description = generate_description(course_title,target_students,api_key=OPENAI_API_KEY)
+        st.session_state.default_description = generate_description(course_title,target_students)
  
     # Combing the course details into a single string
     course_details = f"""Course Title: {course_title}
@@ -78,12 +72,12 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
 
     with st.spinner("Generating Course Topics..."):
         # Genereate topics and search queries
-        queries =  generate_queries(course_details=course_details,api_key=OPENAI_API_KEY)
+        queries =  generate_queries(course_details=course_details)
     st.success("Queries Generated")
 
     with st.spinner("Searching Online for Reference Materials..."):
         # Get Search Results from Google Scholar
-        total_search_results = get_search_results(json.loads(queries),api_key=SERP_API_KEY,api_key2=SERP_API_KEY_2)
+        total_search_results = get_search_results(json.loads(queries))
     st.success("Search Results Generated")
 
     with st.spinner("Generating Learning Outcomes..."):
@@ -92,7 +86,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             course_details=course_details, 
             total_search_results=total_search_results, 
             citation_style=citation_style,
-            model=model,api_key=OPENAI_API_KEY
+            model=model
         )
 
     learning_outcomes = st.session_state.learning_outcomes
@@ -104,7 +98,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             learning_outcomes=learning_outcomes, 
             total_hours=total_hours, 
             weekly_hours=weekly_hours,
-            model=model,api_key=OPENAI_API_KEY
+            model=model
         ) 
         course_outline_json = json.loads(course_outline)
 

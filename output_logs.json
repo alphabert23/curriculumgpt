@@ -13,5 +13,20 @@
         "Execution Time": 98.75223326683044,
         "Save Location": "course_outline_outputs\\Biomedical_Information_Processing_Albert_Pardillo_Course_Outline.docx",
         "Date": "2024-07-03 18:25:48"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Prompt Engineering for Marketing",
+            "Course Description": "\"Prompt Engineering for Marketing\" is a dynamic course designed for 1st Year Marketing Students aiming to master the art of crafting compelling marketing messages. Students will delve into the psychology of consumer behavior, learn to create impactful content, and explore various techniques to engage target audiences effectively. Through hands-on exercises and case studies, participants will develop skills in writing persuasive copy, designing attention-grabbing visuals, and utilizing digital tools for optimal marketing outcomes. This course equips students with the essential tools to excel in the competitive world of marketing by honing their ability to generate innovative and engaging marketing prompts.",
+            "Instructor Name": "Jun Albert Pardillo",
+            "Credit Units": 3,
+            "Target Students": "1st Year Marketing Students",
+            "Total Hours": 18,
+            "Class Hours per Week": 1
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 119.52655172348022,
+        "Save Location": "course_outline_outputs\\Prompt_Engineering_for_Marketing_Jun_Albert_Pardillo_Course_Outline.docx",
+        "Date": "2024-07-03 18:35:16"
     }
 ]

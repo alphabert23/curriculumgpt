@@ -1,21 +1,15 @@
 # research project
 import requests
-from xml.etree import ElementTree as ET
-from bs4 import BeautifulSoup
 from gpt_functions import *
-import json
-import re
+import streamlit as st
 
 try:
-    data = toml.load("api_keys.toml")
-    SERPER_API_KEY = data['SERP_API_KEY']
-    SERPER_API_KEY_2 = data['SERP_API_KEY_2']
+    SERP_KEYS = [data['SERP_API_KEY'],data['SERP_API_KEY_2'],data['SERP_API_KEY_3']]
 except:
-    SERPER_API_KEY = ""
-    SERPER_API_KEY_2 = ""
+    SERP_KEYS = [st.secrets['SERP_API_KEY'],st.secrets['SERP_API_KEY_2'],st.secrets['SERP_API_KEY_3']]
 
 # Input search queries to search in Google Scholar
-def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api_key = SERPER_API_KEY,api_key2= SERPER_API_KEY_2):
+def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
     """
     Params:
     query (str): The search query
@@ -23,27 +17,13 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api
     language (str): Two-letter code for desired language (i.e. "en" for English, "tl" for Tagalog/Filipino)
     as_ylo (int): The year of the last publication to be returned
     """
-    
-
-    # Set up the search parameters
-    params = {
-        "engine": "google_scholar",
-        "q": query,  # Your search query
-        "api_key": api_key,
-        "as_ylo": as_ylo,
-        "hl":language,
-        'num': num_results
-    }
-
-    # Make the API request
-    response = requests.get("https://serpapi.com/search", params=params)
-
-    if response.status_code == 429:
-        # Try again with API key 2
+    i = 1
+    for api_key in SERP_KEYS:
+        # Set up the search parameters
         params = {
             "engine": "google_scholar",
             "q": query,  # Your search query
-            "api_key": api_key2,
+            "api_key": api_key,
             "as_ylo": as_ylo,
             "hl":language,
             'num': num_results
@@ -51,41 +31,14 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020,api
 
         # Make the API request
         response = requests.get("https://serpapi.com/search", params=params)
-    
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Parse the JSON response
-        results = response.json()
-        return results
-    else:
-        print("Failed to retrieve data:", response.status_code)
-        return None
 
-# Build queries 
-# Do Search and retrieve results
-def fetch_site_content(url, max_length=1000):
-    """Fetch and parse the content and hyperlinks of a web page."""
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-    try:
-        response = requests.get(url, headers=headers)
+        # Check if the request was successful
         if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
-            
-            # Extract the text
-            text = soup.get_text(separator=' ', strip=True)
-            
-            # Find all hyperlinks in the page
-            hyperlinks = [a.get('href') for a in soup.find_all('a', href=True) if 'http' in a.get('href')]
-
-            return text[:max_length], hyperlinks
+            # Parse the JSON response
+            results = response.json()
+            return results
         else:
-            print(f"Failed to retrieve page: {response.status_code}")
-            return None, None
-    except Exception as e:
-        print(f"Error fetching page content: {e}")
-        return None, None
-
-
+            print(f"Failed to retrieve data for API KEY {i}:", response.status_code)
+            i+=1
 
 
