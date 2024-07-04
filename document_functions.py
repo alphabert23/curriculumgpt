@@ -79,7 +79,7 @@ def create_word_document_from_json(json_data, title="Course_Outline.docx", strea
     doc.add_heading('Course Outline', level=1)
 
     details_table = doc.add_table(rows=2, cols=2)
-    details_table.style = 'Table Grid'
+    details_table.style = 'TableGrid'
     detail_keys = ["course_title", "instructor_name", "credit_units", "total_hours"]
     for i, key in enumerate(detail_keys):
         cell = details_table.cell(i // 2, i % 2)

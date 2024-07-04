@@ -91,6 +91,10 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             model=model
         )
 
+    if st.session_state.learning_outcomes:
+        st.success("Learning Outcomes Generated")
+    else:
+        st.error("Learning Outcomes failed")
     learning_outcomes = st.session_state.learning_outcomes
 
     with st.spinner("Generating Course Outline..."):

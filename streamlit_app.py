@@ -16,6 +16,8 @@ if 'learning_outcomes' not in st.session_state:
     st.session_state.learning_outcomes = None
 if 'default_description' not in st.session_state:
     st.session_state.default_description = None
+if 'doc_buffer' not in st.session_state:
+    st.session_state.doc_buffer = None
 
 # Logo
 left_co, cent_co,last_co = st.columns(3)
@@ -70,7 +72,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
 
     st.session_state.start_time = time.time()
 
-    with st.spinner("Generating Course Topics..."):
+    with st.spinner("Generating Search Queries..."):
         # Genereate topics and search queries
         queries =  generate_queries(course_details=course_details)
     st.success("Queries Generated")
@@ -89,7 +91,12 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
             model=model
         )
 
+    if st.session_state.learning_outcomes:
+        st.success("Learning Outcomes Generated")
+    else:
+        st.error("Learning Outcomes failed")
     learning_outcomes = st.session_state.learning_outcomes
+
 
     with st.spinner("Generating Course Outline..."):
         # Generate Course Outline
@@ -103,25 +110,18 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
         course_outline_json = json.loads(course_outline)
 
     # Create word document from course outline json
-    # st.session_state.doc_path = create_word_document_from_json(course_outline_json,title=document_title,streamlit = True)
     st.session_state.doc_buffer = create_word_document_from_json(course_outline_json, title=document_title, streamlit=True)
+    
+    if document_title == '':
+        document_title = f"{course_title.replace(' ','_')}_{instructor_name.replace(' ','_')}_Course_Outline"
     st.session_state.output_file_name = f"{document_title}.docx"
     end_time = time.time()
     st.session_state.execution_time = end_time - st.session_state.start_time
     st.session_state.start_time = None
 
-    # Check if the 'outputs' folder exists, if not create it
-    outputs_folder = 'course_outline_outputs'
-    if not os.path.exists(outputs_folder):
-        os.makedirs(outputs_folder)
-
-    # Save output document in the 'outputs' folder
-    if document_title == '':
-        document_title = f"{course_title.replace(' ','_')}_{instructor_name.replace(' ','_')}_Course_Outline"
-    st.session_state.output_file_name = f"{document_title}.docx"
 
 # Once process is finished, provide output
-if st.session_state.output_file_path:
+if st.session_state.doc_buffer:
     st.subheader("Learning Outcomes")
     st.write(st.session_state.learning_outcomes)
 
@@ -129,11 +129,11 @@ if st.session_state.output_file_path:
     mins = round((st.session_state.execution_time // 60),0)
     secs = round((st.session_state.execution_time % 60),0)
     st.write(f"Execution Time: {int(mins)} minutes and {int(secs)} seconds")
-    with open(st.session_state.output_file_path, "rb") as file:
-        btn = st.download_button(
-            label="Download Course Outline",
-            data=st.session_state.doc_buffer,
-            file_name=st.session_state.output_file_name,
-            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    btn = st.download_button(
+        label="Download Course Outline",
+        data=st.session_state.doc_buffer,
+        file_name=st.session_state.output_file_name,
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         )
-    # Add link to google form
+    st.write("Please fulfill this assessment form to rate the output, thank you!")
+    st.markdown("[Course Outline Assessment Form](https://forms.gle/2vekf9A6xATSHi2bA)")

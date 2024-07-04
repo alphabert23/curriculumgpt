@@ -9,7 +9,7 @@ def generate_queries(course_details, model='gpt-4o'):
 
     Figure out the topics that are relevant to this course and generate queries to search for academic resources on Google Scholar.
     For the arrangement of the topics, make sure the flow is appropriate for the course i.e., beginning with a general topic or overview and then moving on to more specific topics.
-    Generate 3 queries to search in Google Scholar. 
+    Generate 5 queries and topics to search in Google Scholar. 
     Note that since the purpose of these queries will be to find suitable references tothe course provided, limit the query to only find academic books appropriate for use as references (i.e. textbooks, journals, etc.) 
 
     Output only the queries in the following json format:

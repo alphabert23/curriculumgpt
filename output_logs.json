@@ -28,5 +28,20 @@
         "Execution Time": 119.52655172348022,
         "Save Location": "course_outline_outputs\\Prompt_Engineering_for_Marketing_Jun_Albert_Pardillo_Course_Outline.docx",
         "Date": "2024-07-03 18:35:16"
+    },
+    {
+        "Course Details": {
+            "Course Title": "Professional Ethics and Values Education",
+            "Course Description": "IT Professionals should be able to conduct themselves appropriately in the company they belong to.  This course enhances  students\u2019 knowledge on the proper way of behaving appropriately as IT Workers and Users. This introduces basic knowledge on morality and ethics. As the course advances, topics such as Computer Crimes, Privacy, Freedom of Expression, Intellectual Property, Software Development and Social Networking are discussed thoroughly.  For each of the topic, case studies are given to further enhance the students\u2019 understanding.",
+            "Instructor Name": "",
+            "Credit Units": 3,
+            "Target Students": "2nd Year BSCS students",
+            "Total Hours": 54,
+            "Class Hours per Week": 3
+        },
+        "Model": "gpt-4o",
+        "Execution Time": 105.04837656021118,
+        "Save Location": "course_outline_outputs\\Professional_Ethics_and_Values_Education__Course_Outline.docx",
+        "Date": "2024-07-04 15:23:54"
     }
 ]
