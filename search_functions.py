@@ -19,9 +19,7 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
     language (str): Two-letter code for desired language (i.e. "en" for English, "tl" for Tagalog/Filipino)
     as_ylo (int): The year of the last publication to be returned
     """
-    i = 1
     for api_key in SERP_KEYS:
-        st.write(api_key)
         # Set up the search parameters
         params = {
             "engine": "google_scholar",

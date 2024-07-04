@@ -23,7 +23,7 @@ def gpt_response(prompt, model = 'gpt-3.5-turbo-1106',max_tokens = 4000,response
     Output:
         result (str): GPT response text
     """
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=OPENAI_API_KEY)
     response = client.chat.completions.create(
         temperature = temperature,
         model=model,

@@ -75,6 +75,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
         # Genereate topics and search queries
         queries =  generate_queries(course_details=course_details)
     st.success("Queries Generated")
+    print(queries)
 
     with st.spinner("Searching Online for Reference Materials..."):
         # Get Search Results from Google Scholar
