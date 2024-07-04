@@ -6,7 +6,9 @@ import streamlit as st
 try:
     SERP_KEYS = [data['SERP_API_KEY'],data['SERP_API_KEY_2'],data['SERP_API_KEY_3']]
 except:
-    SERP_KEYS = [st.secrets['SERP_API_KEY'],st.secrets['SERP_API_KEY_2'],st.secrets['SERP_API_KEY_3']]
+    SERP_KEYS = [st.secrets['SERP_API_KEY'],
+                 st.secrets['SERP_API_KEY_2'],
+                 st.secrets['SERP_API_KEY_3']]
 
 # Input search queries to search in Google Scholar
 def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
@@ -19,6 +21,7 @@ def search_google_scholar(query, num_results=3,language = 'en',as_ylo = 2020):
     """
     i = 1
     for api_key in SERP_KEYS:
+        st.write(api_key)
         # Set up the search parameters
         params = {
             "engine": "google_scholar",
