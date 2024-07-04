@@ -121,7 +121,7 @@ if st.button("GENERATE COURSE OUTLINE",use_container_width=True):
 
 
 # Once process is finished, provide output
-if st.session_state.doc_buffer:
+if st.session_state.output_file_name:
     st.subheader("Learning Outcomes")
     st.write(st.session_state.learning_outcomes)
 
