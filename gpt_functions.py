@@ -9,7 +9,7 @@ try:
 except:
     OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 
-def gpt_response(prompt, model = 'gpt-4o-mini',max_tokens = 4000,response_format = "text", temperature=0.5):
+def gpt_response(prompt, model = 'gpt-4o-mini',max_tokens = 4000,response_format = "text", temperature=0.5,system_message="you are a helpful assistant"):
     """Standard function for generating a GPT response
 
     Params:
